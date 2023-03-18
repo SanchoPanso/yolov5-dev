@@ -768,7 +768,7 @@ class LoadImagesAndLabels(Dataset):
             labels, segments = self.labels[index].copy(), self.segments[index].copy()
             
             if self.hyp is not None and 'mask_cutmix' in self.hyp and random.random() < self.hyp['mask_cutmix']:
-                img, labels = self.mask_cutmix(img, labels)
+                img, labels = self.tube_mask_cutmix(img, labels)
 
             # place img in img4
             if i == 0:  # top left
@@ -815,7 +815,6 @@ class LoadImagesAndLabels(Dataset):
                                            border=self.mosaic_border)  # border to remove
 
         return img4, labels4
-
 
     def load_mosaic9(self, index):
         # YOLOv5 9-mosaic loader. Loads 1 image + 8 random images into a 9-image mosaic

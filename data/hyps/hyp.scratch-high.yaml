@@ -32,3 +32,9 @@ fliplr: 0.5  # image flip left-right (probability)
 mosaic: 1.0  # image mosaic (probability)
 mixup: 0.1  # image mixup (probability)
 copy_paste: 0.1  # segment copy-paste (probability)
+
+
+mask_cutmix: 0.2
+crop_obj_dir: '/home/student2/datasets/crops/0712_comet_crops'
+crop_class_names: ['comet']
+class_names: ['comet', 'joint', 'number']
