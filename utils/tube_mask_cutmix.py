@@ -44,10 +44,10 @@ class TubeMaskCutMix(MaskCutMix):
 
 if __name__ == '__main__':
 
-    dataset_dir = r'D:\datasets\tmk\prepared\tmk_cvs1_yolo_640px_05032023'
-    dir_coco_obj = r"D:\datasets\tmk\crops\0712_comet_crops"#"/home/student2/datasets/crops/0712_comet_crops"
-    coco_class_names = ['comet']
-    class_names = ['comet', 'joint', 'number']
+    dataset_dir = '/home/student2/datasets/prepared/tmk_cvs3_yolo_640px_18032023'
+    dir_coco_obj = '/home/student2/datasets/crops/1903_cvs3_defects_crops'
+    coco_class_names = ['riska', 'sink']
+    class_names = ['riska', 'sink']
     golf = TubeMaskCutMix(dir_coco_obj, coco_class_names, class_names)
     
     splits = ['valid']
@@ -76,6 +76,7 @@ if __name__ == '__main__':
                 y = int((yc - h/2) * img.shape[0])
                 w = int(w * img.shape[1])
                 h = int(h * img.shape[0])
+                cv2.putText(new_img, class_names[int(cls_id)], (x, y), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 1)
                 cv2.rectangle(new_img,
                             (x, y),
                             (x + w, y + h),

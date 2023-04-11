@@ -37,6 +37,7 @@ from utils.torch_utils import torch_distributed_zero_first
 
 # Import MaskCutMix
 from utils.tube_mask_cutmix import TubeMaskCutMix
+from utils.tube_generator import TubeGenerator
 
 # Parameters
 HELP_URL = 'See https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data'
@@ -464,10 +465,14 @@ class LoadImagesAndLabels(Dataset):
         self.path = path
         self.albumentations = Albumentations(size=img_size) if augment else None
 
-        if self.hyp is not None and 'mask_cutmix' in hyp:
-            self.tube_mask_cutmix = TubeMaskCutMix(hyp['crop_obj_dir'], 
-                                                   hyp['crop_class_names'], 
-                                                   hyp['class_names'])
+        # if self.hyp is not None and 'mask_cutmix' in hyp:
+        #     self.tube_mask_cutmix = TubeMaskCutMix(hyp['crop_obj_dir'], 
+        #                                            hyp['crop_class_names'], 
+        #                                            hyp['class_names'])
+
+        if self.hyp is not None and 'tube_gen' in hyp:
+            self.tube_gen = TubeGenerator(hyp['tube_images_dir'], hyp['tube_masks_dir'], hyp['tube_labels_dir'],
+                                          hyp['crop_images_dir'], hyp['crop_class_names'], hyp['class_names'])
         
         try:
             f = []  # image files
@@ -767,8 +772,9 @@ class LoadImagesAndLabels(Dataset):
             img, _, (h, w) = self.load_image(index)
             labels, segments = self.labels[index].copy(), self.segments[index].copy()
             
-            if self.hyp is not None and 'mask_cutmix' in self.hyp and random.random() < self.hyp['mask_cutmix']:
-                img, labels = self.tube_mask_cutmix(img, labels)
+            if self.hyp is not None and 'tube_gen' in self.hyp and random.random() < self.hyp['tube_gen']:
+                img, labels = self.tube_gen()
+            
 
             # place img in img4
             if i == 0:  # top left

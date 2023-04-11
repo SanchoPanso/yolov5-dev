@@ -34,7 +34,19 @@ mixup: 0.1  # image mixup (probability)
 copy_paste: 0.1  # segment copy-paste (probability)
 
 
-mask_cutmix: 0.2
-crop_obj_dir: '/home/student2/datasets/crops/0712_comet_crops'
-crop_class_names: ['comet']
-class_names: ['comet', 'joint', 'number']
+# mask_cutmix: 0.2
+# crop_obj_dir: '/home/student2/datasets/crops/0712_comet_crops'
+# crop_class_names: ['comet']
+# class_names: ['comet', 'joint', 'number']
+
+tube_gen: 0.0
+tube_images_dir: '/mnt/data/tmk_datasets/prepared/tmk_cvs3_yolo_640px_18032023/train/images'
+tube_masks_dir: '/mnt/data/tmk_datasets/prepared/tmk_cvs3_yolo_640px_18032023/train/masks'
+tube_labels_dir: '/mnt/data/tmk_datasets/prepared/tmk_cvs3_yolo_640px_18032023/train/labels'
+crop_images_dir: '/mnt/data/tmk_datasets/crops/1004_defect_crops'
+crop_class_names: ['sink', 'riska'] 
+class_names: ['other', 'tube', 'sink', 'riska', 'pseudo']
+
+
+
+
